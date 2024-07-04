@@ -32,17 +32,15 @@ def score_titulo(titulo):
 # funcion que recibe un titulo y entrega la valoraciones
 @app.get('/votos/')
 def votos_titulo(titulo):
-    if df['vote_count'].values[0]<2000:
+    df_titulo= df[df['title']==titulo]
+    conteo = df_titulo['vote_count'].values[0]
+    if int(conteo)<2000:
         return ('La pelicula tiene menos de 2000 valoraciones. No se devuelve votos')
     else:
-        df_titulo= df[df['title']==titulo]
         anio = df_titulo['release_year'].values[0]
-        conteo = df_titulo['vote_count'].values[0]
         puntaje = df_titulo['vote_average'].values[0]
         return (f'La pelicula {titulo} fue estrenada en el año {anio}. La misma cuenta con {conteo} valoraciones, con un promedio de {round(puntaje,2)}')
     
-
-
 
 # funcion que entrega cantidad de peliculas estrenadas estrenadas en cierto mes
 @app.get('/mes/')
