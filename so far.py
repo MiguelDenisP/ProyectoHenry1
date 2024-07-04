@@ -33,8 +33,7 @@ eda['return']=eda.apply(lambda row: cal_return(row['revenue'], row['budget']), a
 
 # transformamos las fechas de release_date a datetime
 eda['release_date']=pd.to_datetime(eda['release_date'])
-
-# eda['release_date']=eda['release_date'].dt.strftime('%Y-%m-%d')  #Esto es para volverlo str con formato AAAA-mm-dd
+eda['release_date']=eda['release_date'].dt.strftime('%Y-%m-%d')  #Esto es para volverlo str con formato AAAA-mm-dd
 
 # se crea columna 'release_year' donde se alberga solo el año de estreno
 eda['release_year']=eda['release_date'].dt.year
@@ -153,7 +152,6 @@ def obtener_dia_semana(fecha):
     dia_semana = fecha_obj.strftime('%A')
     return dia_semana
 
-
 # creo columna con los días de estreno
 df['release_day']=df['release_date'].apply(obtener_dia_semana)
 
@@ -242,3 +240,29 @@ def votos_titulo(titulo):
         conteo = df_titulo['vote_count'].values[0]
         puntaje = df_titulo['vote_average'].values[0]
         print(f'La pelicula {titulo} fue estrenada en el año {anio}. La misma cuenta con {conteo} valoraciones, con un promedio de {puntaje}')
+
+
+
+# funcion que recibe un actor y entrega cantidad de filmaciones y retorno
+def get_actor(actor):
+
+    df_filtrado = df[df['cast_names'].apply(lambda x: actor in x)]
+    conteo = df_filtrado.shape[0]
+    retorno_total = df_filtrado['return'].sum()
+    if float(conteo)==0:
+        print(f'El actor o actriz {actor} no ha participado en ninguna de estas peliculas')
+    else:
+        retorno_promedio = float(retorno_total)/float(conteo)
+        print(f'El actor {actor} ha participado de {conteo} cantidad de filmaciones, el/la mismo/a ha conseguido un retorno de {retorno_total} con un promedio de {retorno_promedio} por filmacion')
+
+
+
+# Funcion que recibe un director y da harta info
+def get_director(director):
+    df_filtrado = df[df['director_name']==director]
+    retorno_total = df_filtrado['return'].sum()
+    conteo = df_filtrado.shape[0]
+
+    print(f'El/la Director/a {director} ha tenido un retorno total de {retorno_total} dolares')
+    for i in range(0,conteo):
+        print(f'dirigio {df_filtrado.iloc[i,10]}, estrenada el {df_filtrado.iloc[i,5]} que tuvo un retorno de {df_filtrado.iloc[i,13]} con un costo de {df_filtrado.iloc[i,0]} y una ganancia de {df_filtrado.iloc[i,6]}')
