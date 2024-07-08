@@ -128,6 +128,8 @@ def cantidad_filmaciones_dia(dia):
 # funcion que entrega informacion sobre peliculas dirigias por un director
 @app.get("/director/")
 def get_director(director):
+    if director not in df['director_name'].values:
+        return "escribió mal el director o no es tan buen director"
     df_filtrado = df[df['director_name']==director]
     retorno_total = df_filtrado['return'].sum()
     conteo = df_filtrado.shape[0]
