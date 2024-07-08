@@ -5,6 +5,7 @@ from nltk import word_tokenize
 from scipy.sparse import hstack
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
+
 import nltk
 
 
@@ -142,7 +143,8 @@ def get_director(director):
 # MODELO DE RECOMENDACION
 
 """ Por razones de memoria y Render, el tokenizado previo de la data fue realizado en el notebook 'ml.ipynb'
-    Y el modelo entrenado aqui a partir del dataset preparado 'data_modelo.csv'      """
+    Y el modelo entrenado aqui a partir del dataset preparado 'data_modelo.csv'  
+    Tambien, para este prototipo de modelo solo usaremos algunas columnas de las previamente    """
 
 @app.get("/recomendacion/")
 def recomendacion(titulo):
