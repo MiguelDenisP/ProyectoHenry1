@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 import pandas as pd
 import numpy as np
-from nltk import word_tokenize
 from scipy.sparse import hstack
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -151,7 +150,7 @@ def recomendacion(titulo):
 
 
 
-
+# Entrenamiento del modelo y funcion base
 
 df2 = pd.read_csv(r'../Data/data_modelo.csv')
 df2 = df2.fillna("")
@@ -172,6 +171,7 @@ combinacion_matrices = hstack(lista_matrices).tocsr() if len(lista_matrices) > 1
 def similitud_coseno(idx, matriz):
     return cosine_similarity(matriz[idx], matriz).flatten()
 
+# funcion base que recomienda
 def recomendador(title, data, num=5):
     if title not in df['title'].values:
         return f'La película {title} aun no se ha realizado o usted no sabe escribir'
