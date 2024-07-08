@@ -152,7 +152,7 @@ def recomendacion(titulo):
 
 # Entrenamiento del modelo y funcion base
 
-df2 = pd.read_csv(r'../Data/data_modelo.csv')
+df2 = pd.read_csv(r'./Data/data_modelo.csv')
 df2 = df2.fillna("")
 
 lista_columnas = ['tokenizada_overview', 'tokenizada_title', 'tokenizada_director_name', 'tokenizada_production_companies_names']
