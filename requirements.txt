@@ -1,4 +1,4 @@
-aannotated-types==0.7.0
+annotated-types==0.7.0
 anyio==4.4.0
 asttokens==2.4.1
 attrs==23.2.0

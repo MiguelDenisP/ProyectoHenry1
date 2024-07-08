@@ -141,9 +141,15 @@ def get_director(director):
 
 # MODELO DE RECOMENDACION
 
+""" Por razones de memoria y Render, el tokenizado previo de la data fue realizado en el notebook 'ml.ipynb'
+    Y el modelo entrenado aqui a partir del dataset preparado 'data_modelo.csv'      """
+
 @app.get("/recomendacion/")
 def recomendacion(titulo):
     return recomendador(titulo, df2)
+
+
+
 
 
 df2 = pd.read_csv(r'../Data/data_modelo.csv')
