@@ -1,5 +1,11 @@
 from fastapi import FastAPI
 import pandas as pd
+import numpy as np
+from nltk import word_tokenize
+from scipy.sparse import hstack
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import TfidfVectorizer
+import nltk
 
 
 app = FastAPI(
@@ -136,7 +142,7 @@ def get_director(director):
 # MODELO DE RECOMENDACION
 
 @app.get("/recomendacion/")
-def recomendacion(titulo)
+def recomendacion(titulo):
     return recomendador(titulo, df2)
 
 
