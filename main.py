@@ -5,7 +5,6 @@ from nltk import word_tokenize
 from scipy.sparse import hstack
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
-
 import nltk
 
 
@@ -22,7 +21,7 @@ df = pd.read_csv(r"./Data/limpio1.csv")
 # funcion de entrada y testeo
 @app.get("/")
 def index():
-    return "Hola Miguel"
+    return "Hola Miguel. Esta es una API de Peliculas"
 
 
 # funcion que recibe un titulo y entrega el año y la popularidad

@@ -74,7 +74,6 @@ python-dotenv==1.0.1
 python-multipart==0.0.9
 pytz==2024.1
 PyWavelets==1.6.0
-pywin32==306
 PyYAML==6.0.1
 pyzmq==25.1.2
 regex==2024.5.15
@@ -108,6 +107,5 @@ watchfiles==0.22.0
 wcwidth==0.2.13
 websockets==12.0
 widgetsnbextension==4.0.11
-wordcloud==1.9.3
 xgboost==2.0.3
-ydata-profiling==4.8.3
+
