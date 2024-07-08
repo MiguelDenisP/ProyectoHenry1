@@ -162,7 +162,7 @@ dic_vectores = {}
 
 for column in lista_columnas:
     vectorizer = TfidfVectorizer()
-    matriz = vectorizer.fit_transform(df[column])
+    matriz = vectorizer.fit_transform(df2[column])
     dic_vectores[column]=vectorizer
     lista_matrices.append(matriz)
 
