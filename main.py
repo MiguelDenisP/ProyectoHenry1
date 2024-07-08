@@ -130,3 +130,49 @@ def get_director(director):
     for i in range(0,conteo):
         result = result + f'dirigio {df_filtrado.iloc[i,10]}, estrenada el {df_filtrado.iloc[i,5]} que tuvo un retorno de {df_filtrado.iloc[i,13]} con un costo de {df_filtrado.iloc[i,0]} y una ganancia de {df_filtrado.iloc[i,6]}'
     return (result)
+
+
+
+# MODELO DE RECOMENDACION
+
+@app.get("/recomendacion/")
+def recomendacion(titulo)
+    return recomendador(titulo, df2)
+
+
+df2 = pd.read_csv(r'../Data/data_modelo.csv')
+df2 = df2.fillna("")
+
+lista_columnas = ['tokenizada_overview', 'tokenizada_title', 'tokenizada_director_name', 'tokenizada_production_companies_names']
+
+lista_matrices= []
+dic_vectores = {}
+
+for column in lista_columnas:
+    vectorizer = TfidfVectorizer()
+    matriz = vectorizer.fit_transform(df[column])
+    dic_vectores[column]=vectorizer
+    lista_matrices.append(matriz)
+
+combinacion_matrices = hstack(lista_matrices).tocsr() if len(lista_matrices) > 1 else lista_matrices[0]
+
+def similitud_coseno(idx, matriz):
+    return cosine_similarity(matriz[idx], matriz).flatten()
+
+def recomendador(title, data, num=5):
+    if title not in df['title'].values:
+        return f'La película {title} aun no se ha realizado o usted no sabe escribir'
+
+    idx = data[data['title']==title].index[0]
+    puntaje = similitud_coseno(idx, combinacion_matrices)
+
+    lista_pelis = list(enumerate(puntaje))
+    lista_pelis = sorted(lista_pelis, key=lambda x: x[1], reverse=True)
+
+    lista_pelis= lista_pelis[1:num+1]
+
+    indices = [i[0] for i in lista_pelis]
+
+    lista_vacia = []
+
+    return data['title'].iloc[indices].tolist()
