@@ -142,7 +142,7 @@ def get_director(director):
     lista.append(result)
     for i in range(0,conteo):
         lista.append(f'dirigio {df_filtrado.iloc[i,10]}, estrenada el {df_filtrado.iloc[i,5]} que tuvo un retorno de {round(df_filtrado.iloc[i,13],3)} con un costo de {df_filtrado.iloc[i,0]} y una ganancia de {df_filtrado.iloc[i,6]}')
-    return (result)
+    return (lista)
 
 
 
