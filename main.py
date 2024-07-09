@@ -26,6 +26,8 @@ def index():
 # funcion que recibe un titulo y entrega el año y la popularidad
 @app.get("/score/")
 def score_titulo(titulo):
+    if titulo not in df['title'].values:
+        return f'el titulo {titulo} no está en nuestra base de datos'
     df_titulo = df[df['title']==titulo]
     anio = df_titulo['release_year'].values[0]
     score = df_titulo['popularity'].values[0]
@@ -37,6 +39,8 @@ def score_titulo(titulo):
 # funcion que recibe un titulo y entrega la valoraciones
 @app.get('/votos/')
 def votos_titulo(titulo):
+    if titulo not in df['title'].values:
+        return f'el titulo {titulo} no está en nuestra base de datos'
     df_titulo= df[df['title']==titulo]
     conteo = df_titulo['vote_count'].values[0]
     if int(conteo)<2000:
@@ -132,10 +136,12 @@ def get_director(director):
         return "escribió mal el director o no es tan buen director"
     df_filtrado = df[df['director_name']==director]
     retorno_total = df_filtrado['return'].sum()
-    conteo = df_filtrado.shape[0]
+    conteo = df_filtrado.shape[0]    
     result = f'El/la Director/a {director} ha tenido un retorno total de {round(retorno_total,2)} dolares'
+    lista = []
+    lista.append(result)
     for i in range(0,conteo):
-        result = result + f'dirigio {df_filtrado.iloc[i,10]}, estrenada el {df_filtrado.iloc[i,5]} que tuvo un retorno de {df_filtrado.iloc[i,13]} con un costo de {df_filtrado.iloc[i,0]} y una ganancia de {df_filtrado.iloc[i,6]}'
+        lista.append(f'dirigio {df_filtrado.iloc[i,10]}, estrenada el {df_filtrado.iloc[i,5]} que tuvo un retorno de {round(df_filtrado.iloc[i,13],3)} con un costo de {df_filtrado.iloc[i,0]} y una ganancia de {df_filtrado.iloc[i,6]}')
     return (result)
 
 
@@ -176,7 +182,7 @@ def similitud_coseno(idx, matriz):
 # funcion base que recomienda
 def recomendador(title, data, num=5):
     if title not in df['title'].values:
-        return f'La película {title} aun no se ha realizado o usted no sabe escribir'
+        return f'La película {title} aun no se ha realizado o no se encuentra en nuestro database'
 
     idx = data[data['title']==title].index[0]
     puntaje = similitud_coseno(idx, combinacion_matrices)
